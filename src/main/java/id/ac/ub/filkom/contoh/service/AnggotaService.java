@@ -1,0 +1,22 @@
+package id.ac.ub.filkom.contoh.service;
+
+import java.util.List;
+
+import org.springframework.stereotype.Service;
+
+import id.ac.ub.filkom.contoh.entity.Anggota;
+import id.ac.ub.filkom.contoh.repository.AnggotaRepository;
+
+@Service
+public class AnggotaService {
+
+    private final AnggotaRepository anggotaRepository;
+
+    public AnggotaService(AnggotaRepository anggotaRepository) {
+        this.anggotaRepository = anggotaRepository;
+    }
+
+    public List<Anggota> lihatSemuaAnggota() {
+        return anggotaRepository.findAll();
+    }
+}

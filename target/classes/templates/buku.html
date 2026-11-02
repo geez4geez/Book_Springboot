@@ -6,6 +6,7 @@
 </head>
 <body>
 <h1>Daftar Buku</h1>
+<a th:href="@{/anggota}">Lihat Anggota</a>
 
 <form th:action="@{/buku}" method="get">
     <input name="kata" th:value="${kata}" placeholder="Cari judul">
