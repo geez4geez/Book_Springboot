@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Pinjam Buku</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<nav class="nav">
+    <div class="isi">
+        <span class="merek">Perpustakaan</span>
+        <a th:href="@{/buku}">Buku</a>
+        <a th:href="@{/anggota}">Anggota</a>
+        <a th:href="@{/pinjam}" class="aktif">Pinjam Buku</a>
+    </div>
+</nav>
+
+<main>
+    <h1>Pinjam Buku</h1>
+
+    <div class="pilih-anggota">
+        <span class="label">Meminjam sebagai</span>
+        <a class="pil" th:href="@{/pinjam(idAnggota='A001')}"
+           th:classappend="${idAnggota == 'A001'} ? 'aktif'">A001</a>
+        <a class="pil" th:href="@{/pinjam(idAnggota='A002')}"
+           th:classappend="${idAnggota == 'A002'} ? 'aktif'">A002</a>
+    </div>
+
+    <!-- Alur alternatif: pesan gagal + opsi reservasi -->
+    <div class="pesan gagal" th:if="${pesan}">
+        <p th:text="${pesan}">Stok buku habis</p>
+        <p class="tindakan" th:if="${bisaReservasi}"><a href="#">Ajukan reservasi</a></p>
+    </div>
+
+    <div class="kartu">
+        <p class="kosong" th:if="${#lists.isEmpty(daftarBuku)}">Belum ada buku yang bisa dipinjam.</p>
+        <div class="tabel-bungkus" th:unless="${#lists.isEmpty(daftarBuku)}">
+            <table>
+                <tr><th>Judul</th><th>Stok</th><th></th></tr>
+                <tr th:each="b : ${daftarBuku}">
+                    <td th:text="${b.judul}">Judul</td>
+                    <td>
+                        <span class="lencana" th:classappend="${b.stok > 0} ? 'ok' : 'habis'"
+                              th:text="${b.stok}">0</span>
+                    </td>
+                    <td>
+                        <form th:action="@{/pinjam}" method="post">
+                            <input type="hidden" name="idBuku" th:value="${b.idBuku}">
+                            <button type="submit">Pinjam</button>
+                        </form>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</main>
+</body>
+</html>

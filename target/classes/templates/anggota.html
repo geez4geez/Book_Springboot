@@ -2,22 +2,36 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Daftar Anggota</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
 <body>
-<h1>Daftar Anggota</h1>
+<nav class="nav">
+    <div class="isi">
+        <span class="merek">Perpustakaan</span>
+        <a th:href="@{/buku}">Buku</a>
+        <a th:href="@{/anggota}" class="aktif">Anggota</a>
+        <a th:href="@{/pinjam}">Pinjam Buku</a>
+    </div>
+</nav>
 
-<p th:if="${#lists.isEmpty(daftarAnggota)}">Belum ada anggota.</p>
+<main>
+    <h1>Daftar Anggota</h1>
 
-<table border="1" th:unless="${#lists.isEmpty(daftarAnggota)}">
-    <tr><th>ID</th><th>Nama</th><th>Batas Pinjam</th></tr>
-    <tr th:each="a : ${daftarAnggota}">
-        <td th:text="${a.idAnggota}">A001</td>
-        <td th:text="${a.nama}">Nama</td>
-        <td th:text="${a.batasPinjam}">0</td>
-    </tr>
-</table>
-
-<a th:href="@{/buku}">← Ke Daftar Buku</a>
+    <div class="kartu">
+        <p class="kosong" th:if="${#lists.isEmpty(daftarAnggota)}">Belum ada anggota.</p>
+        <div class="tabel-bungkus" th:unless="${#lists.isEmpty(daftarAnggota)}">
+            <table>
+                <tr><th>ID</th><th>Nama</th><th>Batas Pinjam</th></tr>
+                <tr th:each="a : ${daftarAnggota}">
+                    <td th:text="${a.idAnggota}">A001</td>
+                    <td th:text="${a.nama}">Nama</td>
+                    <td th:text="${a.batasPinjam}">0</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</main>
 </body>
 </html>
